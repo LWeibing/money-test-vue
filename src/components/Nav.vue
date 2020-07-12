@@ -1,14 +1,14 @@
 <template>
   <nav>
-    <router-link to="/money" class="item">
+    <router-link to="/money" class="item" active-class="selected">
       <Icon name="money"/>
       Money
     </router-link>
-    <router-link to="/labels" class="item">
+    <router-link to="/labels" class="item" active-class="selected">
       <Icon name="label"/>
       Label
     </router-link>
-    <router-link to="/statistics" class="item">
+    <router-link to="/statistics" class="item" active-class="selected">
       <Icon name="statistics"/>
       Statistics
     </router-link>
@@ -27,6 +27,7 @@
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
     flex-direction: row;
     font-size: 12px;
+
     > .item {
       padding: 2px 0;
       width: 33.333333%;
@@ -34,10 +35,14 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      .icon{
+      .icon {
         width: 32px;
         height: 32px;
       }
+      &.selected{
+        color: red;
     }
+  }
+
   }
 </style>
