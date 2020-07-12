@@ -1,6 +1,7 @@
 <template>
   <Layout>
-    <p>Money</p>
+    <div class="tags"></div>
+    <div class=""></div>
   </Layout>
 </template>
 
