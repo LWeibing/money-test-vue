@@ -1,6 +1,6 @@
 <template>
-  <div class="nav-box">
-    <div class="content">
+  <div class="layout-box">
+    <div class="content" :class="contentPrefix && `${contentPrefix}-content`">
       <slot></slot>
     </div>
     <Nav></Nav>
@@ -9,12 +9,13 @@
 
 <script lang="ts">
   export default {
+    props:['contentPrefix'],
     name: 'Layout'
   };
 </script>
 
 <style lang="scss" scoped>
-  .nav-box {
+  .layout-box {
     display: flex;
     flex-direction: column;
     height: 100vh;
