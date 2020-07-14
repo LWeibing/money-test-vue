@@ -7,27 +7,55 @@
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'Types',
-    props:['xxx'],
-    data(){
-      return{
-        type:'-'
+<script lang="ts">
+  import Vue from 'vue';
+  import {Component, Prop} from 'vue-property-decorator';
+
+  @Component
+  export default class Types extends Vue {
+    type = '-';
+    // @Prop(Number) xxx: number | undefined;
+    // Prop 告诉 Vue xxx 不是 data  是 prop
+    // Number 告诉 Vue xxx 是一个 Number
+    // xxx 属性名
+    // number | undefined 告诉 TS xxx 的类型
+
+    selectType(type: string) { // type 只能是 '-' 或者 '+' 之间的一个
+      if (type !== '-' && type !== '+') {
+        throw new Error('type is unknown');
       }
-    },
-    mounted(){
-      console.log(this.xxx)
-    },
-    methods:{
-      selectType(type){
-        if(type!=='-'&&type!=='+'){
-          throw new Error('type is unknown')
-        }
-        this.type = type
-      }
+      this.type = type;
     }
-  };
+
+    // mounted() {
+    //   if (this.xxx === undefined) {
+    //
+    //   } else {
+    //     this.xxx.yyy(); // 虽然错了，但是可以运行  （TS 拖鞋）
+    //   }
+    //
+    // }
+  }
+  // export default {
+  //   name: 'Types',
+  //   props:['xxx'],
+  //   data(){
+  //     return{
+  //       type:'-' //'-' 表示支出 '+' 表示收入
+  //     }
+  //   },
+  //   mounted(){
+  //     console.log(this.xxx)
+  //   },
+  //   methods:{
+  //     selectType(type){ // type 只能是 '-' 或者 '+' 之间的一个
+  //       if(type!=='-'&&type!=='+'){
+  //         throw new Error('type is unknown')
+  //       }
+  //       this.type = type
+  //     }
+  //   }
+  // };
 </script>
 
 <style lang="scss" scoped>
