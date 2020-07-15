@@ -1,10 +1,9 @@
 <template>
   <Layout content-prefix="layout">
     <NumberPad @update:value="onUpdateAmount"></NumberPad>
-    <Types :value="record.type" @update:value="onUpdateType"></Types>
+    <Types :value.sync="record.type"></Types>
     <Notes @update:value="onUpdateNotes"></Notes>
     <Tags :data-source.sync="tags" @update:value="onUpdateTags"></Tags>
-    {{record}}
   </Layout>
 </template>
 
@@ -38,10 +37,6 @@
 
     onUpdateNotes(value: string) {
       this.record.notes = value;
-    }
-
-    onUpdateType(value: string) {
-      this.record.type = value;
     }
 
     onUpdateAmount(value: string) {

@@ -1,8 +1,8 @@
 <template>
   <div>
     <ul class="types">
-      <li :class="type==='-'&& 'selected'" @click="selectType('-')">支出</li>
-      <li :class="type==='+'&& 'selected'" @click="selectType('+')">收入</li>
+      <li :class="value==='-'&& 'selected'" @click="selectType('-')">支出</li>
+      <li :class="value==='+'&& 'selected'" @click="selectType('+')">收入</li>
     </ul>
   </div>
 </template>
@@ -19,7 +19,7 @@
     // Number 告诉 Vue xxx 是一个 Number
     // xxx 属性名
     // number | undefined 告诉 TS xxx 的类型
-    selectType(type: string) { // type 只能是 '-' 或者 '+' 之间的一个
+    selectType(type: string) {
       if (type !== '-' && type !== '+') {
         throw new Error('type is unknown');
       }
