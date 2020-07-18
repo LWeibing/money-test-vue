@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    sdp
+
   </Layout>
 </template>
 
