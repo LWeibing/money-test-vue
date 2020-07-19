@@ -6,7 +6,8 @@ type Tag = {
 type TagListModel = {
   data: Tag[]
   fetch: () => Tag[]
-  creat: (name: string) => '成功' | '重复'
+  creat: (name: string) => 'success' | 'duplicated'
+  update: (id: string, name: string) => 'success' | 'not found' | 'duplicated'
   save: () => void
 }
 const tagListModel: TagListModel = {
@@ -17,10 +18,26 @@ const tagListModel: TagListModel = {
   },
   creat(name: string) {
     const names = this.data.map(item => item.name);
-    if (names.indexOf(name) >= 0) {return '重复';}
+    if (names.indexOf(name) >= 0) {return 'duplicated';}
     this.data.push({id: name, name: name});
     this.save();
-    return '成功';
+    return 'success';
+  },
+  update(id, name) {
+    const idList = this.data.map(item => item.id);
+    if (idList.indexOf(id) >= 0) {
+      const names = this.data.map(item=>item.name)
+      if(names.indexOf(name)>=0){
+        return 'duplicated'
+      }else{
+        const tag = this.data.filter(item=>item.id===id)[0]
+        tag.name=name
+        this.save()
+        return 'success'
+      }
+    } else {
+      return 'not found';
+    }
   },
   save() {
     window.localStorage.setItem(localStorageName, JSON.stringify(this.data));

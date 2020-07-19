@@ -6,7 +6,9 @@
       <span class="right"></span>
     </div>
     <div class="form-box">
-      <FromItem :value="tag.name" field-name="标签" place-holder="标签名"></FromItem>
+      <FromItem :value="tag.name"
+                @update:value="updateTag"
+                field-name="标签" place-holder="标签名"></FromItem>
     </div>
     <div class="button-box">
       <Button>删除标签</Button>
@@ -25,7 +27,7 @@
     components: {Button, FromItem}
   })
   export default class EditLabel extends Vue {
-    tag?: { id: string, name: string } = undefined;
+    tag?: { id: string; name: string } = undefined;
 
     created() {
       const id = this.$route.params.id;
@@ -37,6 +39,13 @@
       } else {
         this.$router.replace('/404');
       }
+    }
+
+    updateTag(name: string) {
+      if (this.tag) {
+        tagListModel.update(this.tag.id, name);
+      }
+
     }
   }
 </script>
