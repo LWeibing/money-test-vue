@@ -1,17 +1,17 @@
 <template>
   <Layout>
     <div class="navBar">
-      <Icon class="left" name="left"></Icon>
+      <Icon @click="goBack" class="left" name="left"></Icon>
       <span class="title">编辑标签</span>
       <span class="right"></span>
     </div>
     <div class="form-box">
       <FromItem :value="tag.name"
-                @update:value="updateTag"
+                @update:value="update"
                 field-name="标签" place-holder="标签名"></FromItem>
     </div>
     <div class="button-box">
-      <Button>删除标签</Button>
+      <Button @click="remove">删除标签</Button>
     </div>
   </Layout>
 </template>
@@ -41,11 +41,19 @@
       }
     }
 
-    updateTag(name: string) {
+    update(name: string) {
       if (this.tag) {
         tagListModel.update(this.tag.id, name);
       }
+    }
 
+    remove() {
+      if (this.tag) {
+        tagListModel.remove(this.tag.id);
+      }
+    }
+    goBack(){
+      this.$router.back()
     }
   }
 </script>
