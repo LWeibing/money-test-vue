@@ -29,9 +29,9 @@
       const name = window.prompt('请输入新的标签名');
       if (name) {
         const message=tagListModel.creat(name);
-        if(message==='重复'){
+        if(message==='duplicated'){
           window.alert('标签名重复');
-        }else if(message==='成功'){
+        }else if(message==='success'){
           window.alert('添加成功');
         }
       }
