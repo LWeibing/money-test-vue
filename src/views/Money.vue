@@ -18,14 +18,12 @@
   import {Component, Watch} from 'vue-property-decorator';
   import recordListModel from '@/model/recordListModel';
 
-  const recordList = recordListModel.fetch();
-
   @Component({
     components: {Tags, FromItem, Types, NumberPad}
   })
   export default class Money extends Vue {
     tags = window.tagList;
-    recordList: RecordItem[] = recordList;
+    recordList = window.recordList;
     record: RecordItem = {
       tags: [], notes: '', type: '-', amount: 0
     };
@@ -39,7 +37,7 @@
     }
 
     saveRecord() {
-      recordListModel.create(this.record);
+      window.createRecord(this.record);
     }
 
     @Watch('recordList')
