@@ -26,11 +26,11 @@
     components: {Button, FromItem}
   })
   export default class EditLabel extends Vue {
-    tag?: { id: string; name: string } = undefined;
+    tag?: Tag = undefined;
 
     created() {
-        this.tag = window.findTag(this.$route.params.id);
-        if(!this.tag){
+      this.tag = window.findTag(this.$route.params.id);
+      if (!this.tag) {
         this.$router.replace('/404');
       }
     }
@@ -45,9 +45,9 @@
       if (this.tag)
         if (window.removeTag(this.tag.id)) {
           this.$router.back();
-        }else{
-          window.alert('删除失败')
-      }
+        } else {
+          window.alert('删除失败');
+        }
     }
 
     goBack() {
