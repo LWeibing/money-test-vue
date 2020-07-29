@@ -25,8 +25,6 @@
   import typeList from '@/contants/typeList';
   import dayjs from 'dayjs';
 
-  const api = dayjs();
-  console.log(api);
   @Component({
     components: {Tabs}
   })
