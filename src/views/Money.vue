@@ -1,11 +1,11 @@
 <template>
   <Layout content-prefix="layout">
     <NumberPad :value.sync="record.amount" @submit="saveRecord"></NumberPad>
-    <Tabs class-prefix="type" :data-source="typeList" :value.sync="record.type"></Tabs>
     <div class="notes">
       <FromItem field-name="备注" place-holder="在这里输入备注" :value.sync="record.notes"></FromItem>
     </div>
     <Tags @update:value="record.tags=$event"></Tags>
+    <Tabs class-prefix="type" :data-source="typeList" :value.sync="record.type"></Tabs>
   </Layout>
 </template>
 
@@ -38,27 +38,27 @@
     }
 
     saveRecord() {
-
       if (!this.record.tags || this.record.tags.length === 0) {
         return window.alert('请至少选择一个标签');
       }
       this.$store.commit('createRecord', this.record);
       if (this.$store.state.createRecordError === null) {
         window.alert('已保存');
-        this.record.amount = 0;
         this.record.notes = '';
       }
     }
   }
 </script>
 
-<style lang="scss">
-  .layout-content {
+<style lang="scss" scoped>
+  ::v-deep .layout-content {
     display: flex;
     flex-direction: column-reverse;
   }
 
   .notes {
+    min-height: 88px;
     padding: 12px 0;
+    background: #eeeeee;
   }
 </style>

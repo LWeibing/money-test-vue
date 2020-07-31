@@ -12,7 +12,7 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component, Prop, Watch} from 'vue-property-decorator';
+  import {Component, Prop} from 'vue-property-decorator';
 
   @Component
   export default class FromItem extends Vue {
@@ -30,7 +30,7 @@
 <style lang="scss" scoped>
   .formItem {
     font-size: 14px;
-    padding: 0 16px;
+    padding: 20px 16px;
     display: flex;
     align-items: center;
 
@@ -40,10 +40,11 @@
 
     input {
       height: 40px;
-      padding: 32px 0;
+      padding: 18px 16px;
       flex-grow: 1;
-      background: transparent;
-      border: none;
+      /*background: transparent;*/
+      border: 1px solid rgba(255,153,0,0.3);
+      border-radius: 20px;
     }
   }
 </style>

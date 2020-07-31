@@ -1,6 +1,6 @@
 <template>
   <div class="numberPad">
-    <div class="output">{{output}}</div>
+    <div class="output"><span class="symbol">¥</span>{{output}}</div>
     <div class="button">
       <button @click="inputContent">1</button>
       <button @click="inputContent">2</button>
@@ -62,6 +62,7 @@
       const number = parseFloat(this.output);
       this.$emit('update:value', number);
       this.$emit('submit', number);
+      this.output = '0';
     }
   }
 </script>
@@ -70,6 +71,8 @@
   @import "~@/assets/style/helper.scss";
 
   .numberPad {
+    background: white;
+
     > .output {
       @extend %innerShadow;
       font-family: Consolas, monospace;
@@ -77,6 +80,14 @@
       text-align: right;
       padding: 8px 16px;
       height: 64px;
+      position: relative;
+
+      > .symbol {
+        position: absolute;
+        left: 16px;
+        top: 6px;
+        color: rgba(255, 153, 0, 0.2);
+      }
     }
 
     > .button {
@@ -98,7 +109,7 @@
           width: 25*2%;
         }
 
-        $bg: #f2f2f2;
+        $bg: #f3f3f3;
 
         &:nth-child(1) {
           background: $bg;
@@ -125,7 +136,8 @@
         }
 
         &:nth-child(12) {
-          background: darken($bg, 4*6%);
+          background: rgb(255, 153, 0);
+          color: white;
         }
       }
     }

@@ -64,7 +64,8 @@
         margin-top: 6px;
 
         &.selected {
-          background: #d9d9d9;
+          background: rgb(255, 153, 0);
+          color: white;
         }
       }
     }
@@ -75,7 +76,7 @@
       button {
         background: transparent;
         border: none;
-        color: #999;
+        color: rgba(255,153,0,0.5);
         border-bottom: 1px solid;
         padding: 0 4px;
       }

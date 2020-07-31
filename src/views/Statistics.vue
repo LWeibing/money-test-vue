@@ -3,12 +3,12 @@
     <Tabs class-prefix="type" :data-source="typeList" :value.sync="type"></Tabs>
     <ol v-if="groupedList.length>0">
       <li v-for="(group,index) in groupedList" :key="index">
-        <h3 class="title">{{timeTitle(group.title)}}<span>¥{{group.total}}</span></h3>
+        <h3 class="title">{{timeTitle(group.title)}}<span>¥ {{group.total}}</span></h3>
         <ol>
           <li class="record" v-for="item in group.items" :key="item.id">
             <span>{{tagString(item.tags)}}</span>
             <span class="notes">{{item.notes}}</span>
-            <span>¥{{item.amount}}</span>
+            <span>¥ {{item.amount}}</span>
           </li>
         </ol>
       </li>
@@ -88,28 +88,12 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "~@/assets/style/helper.scss";
+
   .no-record {
     padding: 16px;
     text-align: center;
     color: #999;
-  }
-
-  ::v-deep {
-    .type-tabs-item {
-      background: #c4c4c4;
-
-      &.selected {
-        background: white;
-
-        &::after {
-          display: none;
-        }
-      }
-    }
-
-    .interval-tabs-item {
-      height: 48px;
-    }
   }
 
   %item {
@@ -121,7 +105,9 @@
   }
 
   .title {
-    @extend %item
+    @extend %item;
+    color: rgb(255, 153, 0);
+    border-bottom: 1px solid rgb(255, 153, 0);
   }
 
   .record {
