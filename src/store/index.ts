@@ -11,7 +11,7 @@ const store = new Vuex.Store({
     createRecordError: null,
     createTagError: null,
     tagList: [] as Tag[],
-    currentTag: undefined
+    currentTag: undefined,
   } as RootState,
   mutations: {
     setCurrentTag(state, id: string) {
@@ -22,7 +22,7 @@ const store = new Vuex.Store({
     },
     createRecord(state, record) {
       const record2 = clone(record);
-      record2.createdAt = new Date().toISOString();
+      record2.createdAt = record2.createdAt || new Date().toISOString();
       state.recordList.push(record2);
       store.commit('saveRecord');
     },

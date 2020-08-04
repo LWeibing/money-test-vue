@@ -1,20 +1,26 @@
 <template>
   <Layout>
     <Tabs class-prefix="type" :data-source="typeList" :value.sync="type"></Tabs>
-    <ol v-if="groupedList.length>0">
-      <li v-for="(group,index) in groupedList" :key="index">
-        <h3 class="title">{{timeTitle(group.title)}}<span>¥ {{group.total}}</span></h3>
-        <ol>
-          <li class="record" v-for="item in group.items" :key="item.id">
-            <span>{{tagString(item.tags)}}</span>
-            <span class="notes">{{item.notes}}</span>
-            <span>¥ {{item.amount}}</span>
-          </li>
-        </ol>
-      </li>
-    </ol>
-    <div v-else class="no-record">
-      目前没有相关记录
+    <Tabs class-prefix="listType" :data-source="showTypeList" :value.sync="listType"></Tabs>
+    <div v-if="listType==='imageList'">
+      <Echarts></Echarts>
+    </div>
+    <div v-else>
+      <ol v-if="groupedList.length>0">
+        <li v-for="(group,index) in groupedList" :key="index">
+          <h3 class="title">{{timeTitle(group.title)}}<span>¥ {{group.total}}</span></h3>
+          <ol>
+            <li class="record" v-for="item in group.items" :key="item.id">
+              <span>{{tagString(item.tags)}}</span>
+              <span class="notes">{{item.notes}}</span>
+              <span>¥ {{item.amount}}</span>
+            </li>
+          </ol>
+        </li>
+      </ol>
+      <div v-else class="no-record">
+        目前没有相关记录
+      </div>
     </div>
   </Layout>
 </template>
@@ -24,11 +30,13 @@
   import Vue from 'vue';
   import {Component} from 'vue-property-decorator';
   import typeList from '@/contants/typeList';
+  import showTypeList from '@/contants/showTypeList';
   import dayjs from 'dayjs';
   import clone from '@/lib/clone';
+  import Echarts from '@/components/Echarts.vue';
 
   @Component({
-    components: {Tabs}
+    components: {Echarts, Tabs}
   })
   export default class Statistics extends Vue {
     tagString(tags: Tag[]) {
@@ -81,9 +89,10 @@
     beforeCreate() {
       this.$store.commit('fetchRecord');
     }
-
     type = '-';
     typeList = typeList;
+    listType = 'imageList';
+    showTypeList = showTypeList;
   }
 </script>
 
@@ -119,5 +128,16 @@
     margin-right: auto;
     margin-left: 16px;
     color: #999;
+  }
+
+  ::v-deep .listType-tabs-item {
+    height: 48px;
+    background: white;
+
+    &.selected {
+      background: white;
+      color: inherit;
+      border-bottom: 2px solid rgb(255, 153, 0);
+    }
   }
 </style>

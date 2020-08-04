@@ -1,20 +1,19 @@
 <template>
-  <div>
-    <div>
-      <Layout content-prefix="layout">
-        <NumberPad :value.sync="record.amount" @submit="saveRecord"></NumberPad>
-        <div class="notes">
-          <FromItem field-name="备注" place-holder="在这里输入备注" :value.sync="record.notes"></FromItem>
-        </div>
-        <Tags @update:value="record.tags=$event"></Tags>
-        <Tabs class-prefix="type" :data-source="typeList" :value.sync="record.type"></Tabs>
-      </Layout>
-    </div>
 
-    <div v-if="metaWidth>500">
-      <Qrcord></Qrcord>
+  <Layout content-prefix="layout">
+    <NumberPad :value.sync="record.amount" @submit="saveRecord"></NumberPad>
+    <div class="createdAt">
+      <FromItem field-name="日期" type="date" :value.sync="record.createdAt"></FromItem>
     </div>
-  </div>
+    <div class="notes">
+      <FromItem field-name="备注" place-holder="在这里输入备注" :value.sync="record.notes"></FromItem>
+    </div>
+    <Tags @update:value="record.tags=$event"></Tags>
+    <Tabs class-prefix="type" :data-source="typeList" :value.sync="record.type"></Tabs>
+    <template v-if="metaWidth>500">
+      <Qrcord></Qrcord>
+    </template>
+  </Layout>
 </template>
 
 <script lang="ts">
@@ -37,10 +36,10 @@
     }
   })
   export default class Money extends Vue {
-    metaWidth = document.documentElement.clientWidth
+    metaWidth = document.documentElement.clientWidth;
     typeList = typeList;
     record: RecordItem = {
-      tags: [], notes: '', type: '-', amount: 0
+      tags: [], notes: '', type: '-', amount: 0, createdAt: new Date().toISOString()
     };
 
     created() {
@@ -67,8 +66,14 @@
   }
 
   .notes {
-    min-height: 88px;
-    padding: 12px 0;
+    min-height: 60px;
+    padding: 6px 0;
     background: #eeeeee;
+  }
+  .createdAt {
+    min-height: 60px;
+    padding: 6px 0;
+    background: #eeeeee;
+    margin-top: -6px;
   }
 </style>
