@@ -6,7 +6,7 @@
         <input :type="type||'text'"
                :value="x(value)"
                @input="onValueChange($event.target.value)"
-               :placeholder="placeHolder" :max="x(value)">
+               :placeholder="placeHolder" :max="x(dayjs)">
       </template>
       <template v-else>
         <input :type="type||'text'"
