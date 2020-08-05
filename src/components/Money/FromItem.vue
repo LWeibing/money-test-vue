@@ -6,7 +6,7 @@
         <input :type="type||'text'"
                :value="x(value)"
                @input="onValueChange($event.target.value)"
-               :placeholder="placeHolder" :max="x(dayjs)">
+               :placeholder="placeHolder" :max="x(day)">
       </template>
       <template v-else>
         <input :type="type||'text'"
@@ -29,6 +29,8 @@
     @Prop() placeHolder?: string;
     @Prop({default: ''}) value!: string;
     @Prop() type?: string;
+
+    day = dayjs();
 
     onValueChange(value: string) {
       this.$emit('update:value', value);

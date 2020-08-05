@@ -2,8 +2,8 @@
   <Layout>
     <Tabs class-prefix="type" :data-source="typeList" :value.sync="type"></Tabs>
     <Tabs class-prefix="listType" :data-source="showTypeList" :value.sync="listType"></Tabs>
-    <div v-if="listType==='imageList'">
-      <Echarts></Echarts>
+    <div v-if="listType==='imageList'" class="chart-wrapper" ref="chartWrapper">
+      <Chart class="chart" :options="option"></Chart>
     </div>
     <div v-else>
       <ol v-if="groupedList.length>0">
@@ -33,10 +33,10 @@
   import showTypeList from '@/contants/showTypeList';
   import dayjs from 'dayjs';
   import clone from '@/lib/clone';
-  import Echarts from '@/components/Echarts.vue';
+  import Chart from '@/components/Chart.vue';
 
   @Component({
-    components: {Echarts, Tabs}
+    components: {Chart, Tabs}
   })
   export default class Statistics extends Vue {
     tagString(tags: Tag[]) {
@@ -86,9 +86,49 @@
       }
     }
 
+    get option() {
+      return {
+        tooltip: {
+          show: true,
+          triggerOn: 'click',
+          formatter: '{c}',
+          position: 'top'
+        },
+        grid: {
+          left: 0,
+          right: 0
+        },
+        xAxis: {
+          axisTick: {alignWithLabel: true},
+          type: 'category',
+          data: [
+            '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+            '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
+            '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'
+          ]
+        },
+        yAxis: {
+          type: 'value',
+          show: false
+        },
+        series: [{
+          itemStyle: {color: 'rgb(255, 153, 0)'},
+          symbolSize: 8,
+          data: [820, 932, 901, 934, 1290, 1330, 1320],
+          type: 'line'
+        }]
+      };
+    }
+
     beforeCreate() {
       this.$store.commit('fetchRecord');
     }
+
+    mounted() {
+      const chartWidth = (this.$refs.chartWrapper as HTMLDivElement)
+      chartWidth.scrollLeft = chartWidth.scrollWidth;
+    }
+
     type = '-';
     typeList = typeList;
     listType = 'imageList';
@@ -138,6 +178,18 @@
       background: white;
       color: inherit;
       border-bottom: 2px solid rgb(255, 153, 0);
+    }
+  }
+
+  .chart-wrapper {
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    > .chart {
+      width: 430%;
     }
   }
 </style>
