@@ -13,9 +13,6 @@
     @Prop() options?: EChartOption;
 
     mounted() {
-      // const width = document.documentElement.clientWidth;
-      // this.$refs.container.style.width = `${width + 34}px`;
-      // this.$refs.container.style.height = `${(width + 34) * 1.2}px`;
       if (this.options === undefined) {return;}
       const chart = echarts.init(this.$refs.wrapper as HTMLDivElement);
       chart.setOption(this.options);

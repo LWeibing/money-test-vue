@@ -34,6 +34,7 @@
   import dayjs from 'dayjs';
   import clone from '@/lib/clone';
   import Chart from '@/components/Chart.vue';
+  import _ from 'lodash';
 
   @Component({
     components: {Chart, Tabs}
@@ -87,6 +88,16 @@
     }
 
     get option() {
+      const today = new Date();
+      const array = [];
+      for (let i = 0; i <= 29; i++) {
+        const key = dayjs(today).subtract(i, 'day').format('YYYY-MM-DD');
+        const found = _.find(this.recordList, {createdAt: key});
+        array.push({key: key, value: found && found.amount || 0});
+      }
+      array.reverse();
+      const keys = array.map(item => item.key);
+      const values = array.map(item => item.value);
       return {
         tooltip: {
           show: true,
@@ -101,11 +112,12 @@
         xAxis: {
           axisTick: {alignWithLabel: true},
           type: 'category',
-          data: [
-            '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
-            '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
-            '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'
-          ]
+          data: keys,
+          axisLabel: {
+            formatter: function (value: string) {
+              return value.substr(5);
+            }
+          }
         },
         yAxis: {
           type: 'value',
@@ -114,7 +126,7 @@
         series: [{
           itemStyle: {color: 'rgb(255, 153, 0)'},
           symbolSize: 8,
-          data: [820, 932, 901, 934, 1290, 1330, 1320],
+          data: values,
           type: 'line'
         }]
       };
@@ -125,7 +137,7 @@
     }
 
     mounted() {
-      const chartWidth = (this.$refs.chartWrapper as HTMLDivElement)
+      const chartWidth = (this.$refs.chartWrapper as HTMLDivElement);
       chartWidth.scrollLeft = chartWidth.scrollWidth;
     }
 
