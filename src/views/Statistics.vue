@@ -28,7 +28,7 @@
 <script lang="ts">
   import Tabs from '@/components/Tabs.vue';
   import Vue from 'vue';
-  import {Component} from 'vue-property-decorator';
+  import {Component, Watch} from 'vue-property-decorator';
   import typeList from '@/contants/typeList';
   import showTypeList from '@/contants/showTypeList';
   import dayjs from 'dayjs';
@@ -40,6 +40,7 @@
     components: {Chart, Tabs}
   })
   export default class Statistics extends Vue {
+    @Watch('mounted')
     tagString(tags: Tag[]) {
       return tags.length === 0 ? '无' : tags.map(t => t.name).join(', ');
     }
@@ -92,8 +93,8 @@
       const array = [];
       for (let i = 0; i <= 29; i++) {
         const key = dayjs(today).subtract(i, 'day').format('YYYY-MM-DD');
-        const found = _.find(this.recordList, {createdAt: key});
-        array.push({key: key, value: found && found.amount || 0});
+        const found = _.find(this.groupedList, {title: key});
+        array.push({key: key, value: found && found.total || 0});
       }
       array.reverse();
       const keys = array.map(item => item.key);
@@ -135,12 +136,10 @@
     beforeCreate() {
       this.$store.commit('fetchRecord');
     }
-
     mounted() {
       const chartWidth = (this.$refs.chartWrapper as HTMLDivElement);
       chartWidth.scrollLeft = chartWidth.scrollWidth;
     }
-
     type = '-';
     typeList = typeList;
     listType = 'imageList';
