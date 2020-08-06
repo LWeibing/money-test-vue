@@ -2,10 +2,10 @@
   <Layout>
     <Tabs class-prefix="type" :data-source="typeList" :value.sync="type"></Tabs>
     <Tabs class-prefix="listType" :data-source="showTypeList" :value.sync="listType"></Tabs>
-    <div v-if="listType==='imageList'" class="chart-wrapper" ref="chartWrapper">
+    <div v-show="listType==='imageList'" class="chart-wrapper" ref="chartWrapper">
       <Chart class="chart" :options="option"></Chart>
     </div>
-    <div v-else>
+    <div v-show="listType!=='imageList'">
       <ol v-if="groupedList.length>0">
         <li v-for="(group,index) in groupedList" :key="index">
           <h3 class="title">{{timeTitle(group.title)}}<span>¥ {{group.total}}</span></h3>
@@ -136,10 +136,12 @@
     beforeCreate() {
       this.$store.commit('fetchRecord');
     }
+
     mounted() {
       const chartWidth = (this.$refs.chartWrapper as HTMLDivElement);
       chartWidth.scrollLeft = chartWidth.scrollWidth;
     }
+
     type = '-';
     typeList = typeList;
     listType = 'imageList';

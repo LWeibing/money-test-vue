@@ -1,7 +1,7 @@
 <template>
 
   <Layout content-prefix="layout">
-    <NumberPad :value.sync="record.amount" @submit="saveRecord"></NumberPad>
+    <NumberPad :value.sync="record.amount" @submit="saveRecord" ref="numberPad"></NumberPad>
     <div class="createdAt">
       <FromItem field-name="日期" type="date" :value.sync="record.createdAt"></FromItem>
     </div>
@@ -54,6 +54,7 @@
       if (this.$store.state.createRecordError === null) {
         window.alert('已保存');
         this.record.notes = '';
+        (this.$refs.numberPad as HTMLFormElement).output = '0';
       }
     }
   }
@@ -70,6 +71,7 @@
     padding: 6px 0;
     background: #eeeeee;
   }
+
   .createdAt {
     min-height: 60px;
     padding: 6px 0;
