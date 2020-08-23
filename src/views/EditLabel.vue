@@ -67,10 +67,6 @@
     align-items: center;
     justify-content: space-between;
 
-    > .title {
-
-    }
-
     > .left {
       width: 24px;
       height: 24px;
